@@ -2,6 +2,7 @@
 from __future__ import annotations
 from math import hypot
 
+
 class Vector:
     def __init__(self, x: int, y: int) -> None:
         self.x = x
@@ -21,6 +22,6 @@ class Vector:
         y: int = self.y + other.y
 
         return Vector(x, y)
-    
+
     def __mul__(self, scalar: int) -> Vector:
         return Vector(self.x * scalar, self.y * scalar)
