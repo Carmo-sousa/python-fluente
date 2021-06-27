@@ -9,3 +9,9 @@ ninguém jamais usaria, porém Guido é uma dessas raras pessoas capazes de cria
 
 - [1.1 Um baralho com uma sequência de cartas](1-1-exemplo.py)
 - [1.2 Uma classe simples de vetor bidimensional](1-2-exemplo.py)
+
+## Leitura complementar
+
+- Python in a Nutshell
+- Python essential reference
+- Python cookbook
