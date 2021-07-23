@@ -1,0 +1,77 @@
+# Uma coleção de sequências
+
+## Visão geral das sequências embutidas
+
+A biblioteca-padrão disponibiliza um conjunto rico de tipos de sequência
+implementados em C.
+
+### _sequências container_
+
+`list`, `tuple` e `collections.deque` podem armazenar itens de tipos diferentes.
+
+### _Sequências simples_
+
+`str`, `bytes`, `bytearray`, `memoryview` e `array.array` podem armazenar itens
+de tipos diferentes.
+
+As _sequências container_ armazenam referências aos objetos que elas contêm, que
+podem ser de qualquer tipo, enquanto as _sequências simples_ armazenam fisicamente
+o valor de cada item em seu próprio espaço de memoría, e não como objetos distintos.
+Desse modo, as sequências simples são mais compactas, porém estão limitadas ao armazenamento
+de valores primitivos como caracteres, bytes e números.
+
+Outra maneira de agrupar os tipos de sequências é de acordo com a mutabilidade:
+
+_Sequências matáveis_: `list`, `bytearray`, `array.array`, `collections.deque` e `memoryview`
+
+_Sequências imutáveis_: `tuple`, `str` e bytes
+
+## Usando "*" para capturar itens excedentes
+
+Definir parâmetros de função com `*args` para capturar quaisquer argumentos em
+excesso é um recurso clássico em python.
+
+```python
+>>> a, b, *rest = range(5)
+>>> a, b, rest
+(0, 1, [2, 3, 4])
+>>> a, b, *rest = range(3)
+>>> a, b, rest
+(0, 1, [2])
+>>> a, b, *rest = range(2)
+>>> a, b, rest
+(0, 1, [])
+```
+
+No contexto da atribuição paralela, o prefixo * pode ser aplicado exatamente a uma variável, mas poderá aparecer em qualquer posição:
+
+```python
+>>> a, *body, c, d = range(5)
+>>> a, body, c, d
+(0, [1, 2], 3, 4)
+>>> *head, b, c, d = range(5)
+>>> head, b, c, d
+([0, 1], 2, 3, 4)
+```
+
+Por fim, um recurso poderoso do desempacotamento de tuplas é o suporte a estruturas aninhadas.
+
+### Por que as fatias e os intervalos excluem o último item
+
+A convenção pythônica de excluir o último item de fatias e de intervalos (range) funciona bem com a indexação baseada em zero usada em python, C e em diversas outras linguagens. Algumas características convenientes da convenção são:
+
+- É fácil ver o tamanho de uma fatia ou de um intervalo quando somente a posição final é especificada: tanto `range(3)` quanto `my_list[:3]` geram três itens.
+- É fácil calcular o tamanho de uma fatia ou de um intervalo quando o início e o fim são especificados:
+ basta subtrair `stop - start`.
+- É fácil separar um sequência em duas partes em qualquer índice `x`, sem que haja sobreposição: basta fazer `my_list[:x]` e `my_list[x:]`.
+
+## Quando uma lista não é a resposta
+
+O tipo `list` é flexível de usar, porém, dependendo dos requisitos específicos,
+há opções melhores. por exemplo, se houver necessidade de armazenar dez milhões
+de valores de ponto flutuante, um `array` será muito mais eficiente, pois um
+`array` não armazena objetos `float` complexos, mas apenas os bytes compactos
+que representam seus valores de maquinas - assim como um `array` na linguagem C.
+Por outro lado, se você adicionar e remover itens constantemente das extremidades
+de uma lista como uma estrutura de dados FIFO ou LIFO, um `deque`(double-ended queue, ou fila dupla)
+será mais rápido.
